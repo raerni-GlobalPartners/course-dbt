@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_addresses
+    description: Contains address info about users and to which orders are shipped
+
+  - name: stg_events
+    description: Contains info about events on the Greenery web site to track user activity that may result in an order being placed for a product
+
+  - name: stg_orders
+    description: Contains info about an order ... user, address, promo, and event that created it
+
+  - name: stg_order_items
+    description: Contains info about the qty of a product included on an order
+
+  - name: stg_products
+    description: Contains info about a product including its price and current inventory qty
+
+  - name: stg_promos
+    description: Contains info about the discount associated with a promo and whether it is currently active
+
+  - name: stg_users
+    description: Contains demographic info about a user/customer

@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+
+  - name: postgres # name of the source
+    schema: public # this is the schema our raw data lives in
+    database: raw # this is the name of the database that our source data lives in
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    freshness: # this is where we define freshness thresholds
+      warn_after: {count: 24, period: hour}
+      error_after: {count: 48, period: hour}
+
+    tables: # this is where we define table metadata (name, description, load timestamps)
+      - name: addresses
+        loaded_at_field: null
+        description: >
+          Contains address info about users and to which orders are shipped
+      - name: events
+        loaded_at_field: created_at
+        description: >
+          Contains info about events on the Greenery web site to track user activity that may result in an order being placed for a product
+      - name: orders
+        loaded_at_field: created_at
+        description: >
+          Contains info about an order:  user, address, promo, and event that created it
+      - name: order_items
+        loaded_at_field: null
+        description: >
+          Contains info about the qty of a product included on an order
+      - name: products
+        loaded_at_field: null
+        description: >
+          Contains info about a product including its price and current inventory qty
+      - name: promos
+        loaded_at_field: null
+        description: >
+          Contains info about the discount associated with a promo and whether it is currently active
+      - name: users
+        loaded_at_field: created_at
+        description: >
+          Contains demographic info about a user/customer
