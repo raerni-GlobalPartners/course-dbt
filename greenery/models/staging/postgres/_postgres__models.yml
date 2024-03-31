@@ -3,21 +3,83 @@ version: 2
 models:
   - name: stg_addresses
     description: Contains address info about users and to which orders are shipped
+    columns:
+      - name: address_id
+        tests:  # basic PK conditions
+          - not_null
+          - unique
 
   - name: stg_events
     description: Contains info about events on the Greenery web site to track user activity that may result in an order being placed for a product
+    columns:
+      - name: event_id
+        tests:  # basic PK conditions
+          - not_null
+          - unique
+      - name: session_id
+        tests:  # not going to be unique but should be not null
+          - not_null
+  
 
   - name: stg_orders
     description: Contains info about an order ... user, address, promo, and event that created it
+    columns:
+      - name: order_id
+        tests:  # basic PK conditions
+          - not_null
+          - unique
+      - name: user_id
+        tests:  # hopefully not unique but s/b not null
+          - not_null
+      - name: address_id
+        tests:  # unlikely to be unique, s/b not null
+          - not_null
+      - name: status
+        tests:  # not unique but s/b not null
+          - not_null
 
   - name: stg_order_items
     description: Contains info about the qty of a product included on an order
+    columns:
+      - name: order_id
+        tests:  # just not null
+          - not_null
+      - name: product_id
+        tests:  # just not null
+          - not_null
+      - name: quantity
+        tests:  # not null and positive
+          - not_null
+          - positive_values
+
 
   - name: stg_products
     description: Contains info about a product including its price and current inventory qty
+    columns:
+      - name: product_id
+        tests:  # basic PK conditions
+          - not_null
+          - unique
+      - name: inventory
+        tests:  # not null and positive number
+          - not_null
+          - positive_values
 
   - name: stg_promos
     description: Contains info about the discount associated with a promo and whether it is currently active
+    columns:
+      - name: promo_id
+        tests:  # basic PK conditions
+          - not_null
+          - unique
 
   - name: stg_users
     description: Contains demographic info about a user/customer
+    columns:
+      - name: user_id
+        tests:  # basic PK conditions
+          - not_null
+          - unique
+      - name: address_id
+        tests:  # must be present ... not necessarily always going to be the case but assumed in this case
+          - not_null
