@@ -56,13 +56,15 @@ from UserOrderCounts uoc;
 
 
 -- On average, how many unique sessions do we have per hour?
-with EventsPerHour as
+-- This query and the answer were corrected after the week 1 project was submitted and other project reviewed
+-- I had been counting the number of events per hour, not sessions per hour
+with SessionsPerHour as
 (
-Select day(e.CREATED_AT), hour(e.CREATED_AT), count(*) Events
+Select day(e.CREATED_AT), hour(e.CREATED_AT), count(distinct session_id) Sessions
 from stg_events e
 group by day(e.CREATED_AT), hour(e.CREATED_AT)
 order by day(e.CREATED_AT), hour(e.CREATED_AT)
 )
-select avg(Events) AvgEventsPerHour
-from EventsPerHour;
--- Answer:  61.26 events per hours
+select avg(Sessions) AvgSessionsPerHour
+from SessionsPerHour;
+-- Answer:  16.33 sessions per hours
