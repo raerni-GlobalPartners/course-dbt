@@ -17,12 +17,17 @@ models:
           - not_null
           - unique
       - name: session_id
-        tests:  # not going to be unique but should be not null
+        tests: # not going to be unique but should be not null
           - not_null
   
 
   - name: stg_orders
     description: Contains info about an order ... user, address, promo, and event that created it
+#    tests:  Could not get this to work, must revisit
+#      - dbt_utils.expression_is_true:
+#        expression: delivered_at > created_at
+#        config:
+#          where delivered_at is not null
     columns:
       - name: order_id
         tests:  # basic PK conditions

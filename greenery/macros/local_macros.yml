@@ -1,0 +1,14 @@
+version: 2
+
+macros:
+  - name: select_distinct_sessions
+    description: Simple macro to generate a select statement for the distinct session_id values in a table for a particular event_type
+    docs:
+      show: true
+    arguments:
+      - name: table
+        type: string representing a table
+        description: Identifies the event_type to use in selecting distinct session_id values
+      - name: event_type
+        type: string representing an event_type
+        description: Identifies the event_type to use in selecting distinct session_id values
